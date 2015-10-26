@@ -1,0 +1,34 @@
+By Wenzhe jiang (wj3) & Jun Liu (jl84)
+
+Description of submitted source files:
+
+1. yfs.c: This is the file server program. It receives messsages from client processes,
+executes the requested file system operations, and returns reply messages to the
+requesting processes.
+
+2. iolib.c: This file defines all procedures for the yalnix file system requests from 
+user processes. Upon being called by user process, it sends a message to server process,
+waits for the respond, processes the reply message, and return results to user process.
+
+3. yfs.h: This is the headfile for all source c files 
+
+4. README: A general description of the whole project
+
+Design and algorith highlights:
+
+1. LRU cache for inodes and blocks: The LRU cache is built based on a doubly-linked list
+and a chaining implemented hashtable. This LRU cache can realize ~O(1) time lookup and insert.
+The doubly-linked list can maintain the LRU characteristics of the cache and the hashmap
+supports the fast lookup characteristics.
+
+2. Build & maintain of free block list and free inode list: The build of the two free 
+lists is not trivial. To realize it, the server process need to traverse the whole tree 
+structure sit on the disk when it starts.
+
+3. Pathname parsing: this is implemented as a recursion function. In order to support many
+special cases, non-trivial string processing is required.
+
+Testing:
+
+We thoroughly tested our yalnix file system using all given samples in the pub/samples-lab3
+folder on clear without any problem.
